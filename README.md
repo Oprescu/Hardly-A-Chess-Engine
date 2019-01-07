@@ -1,2 +1,2 @@
-# Hardly-A-Chess-Engine
+# Hardly a Chess Engine
 A little chess engine project.
