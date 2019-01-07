@@ -84,7 +84,7 @@ public class GUI extends Application implements CoordinateLookupTable{
 		         //event.consume();
 		     });
 			chessboard_Pawns[i][1].addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-		         System.out.println("Tile pressed");
+		        
 		         ImageView current = (ImageView) event.getSource();
 		         Thread task = new Thread(new Runnable(){
 		 	        @Override
