@@ -1,9 +1,11 @@
 import java.util.ArrayList;
 public class Rook extends Piece implements CoordinateLookupTable{
 	
+	public static int counter=1;
 	
 	public Rook(boolean isWhite,int x, int y) {
-		pieceName="Rook";
+		pieceName="Rook " + counter;
+		counter++;
 		this.isWhite=isWhite;
 		this.x=x;
 		this.y=y;
@@ -56,7 +58,7 @@ public class Rook extends Piece implements CoordinateLookupTable{
 					}
 				}
 
-		return null;
+		return legalMoves;
 	}
 
 	@Override

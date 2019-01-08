@@ -3,7 +3,25 @@ public class Chessboard implements CoordinateLookupTable{
 	public static int turn = 1;
 	Square[][] board = new Square[8][8];
 	
+	public static void main(String args[]) {
+		Chessboard test = new Chessboard();
+		System.out.println(test);
+		System.out.println(test.getSquare(E2).piece.getLegalMoves(test.board).toString());
+	}	
+	
 	public Chessboard() {
+		
+		for(int i=0;i<8;i++){
+			for(int j=0;j<8;j++) {
+				board[i][j] = new Square();
+			}
+		}
+		
+		for(int i=0;i<8;i++) {
+			board[i][1].piece=new Pawn(true,i,1);
+		}
+		
+		
 		int iterator=0;
 		for(int i=0;i<8;i++){
 			for(int j=0;j<8;j++) {
@@ -11,6 +29,7 @@ public class Chessboard implements CoordinateLookupTable{
 				iterator++;
 			}
 		}
+		
 	}
 	
 	/**
@@ -46,5 +65,17 @@ public class Chessboard implements CoordinateLookupTable{
 			}
 		}
 		return null;
+	}
+	
+	public String toString() {
+	String chess="";	
+		
+		for(int i=7;i>=0;i--) {
+			for(int j=0;j<=7;j++) {
+				chess+=board[j][i].toString() + " ";
+			}
+			chess+='\n';
+		}
+	return chess;
 	}
 }

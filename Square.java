@@ -1,13 +1,11 @@
 
 public class Square implements CoordinateLookupTable{
 		Piece piece;
-		boolean hasPiece;
 		String name;
 		static int counter=0;
 		
 		public Square() {
 			piece = null;
-			hasPiece=false;
 			name = null;
 		}
 		
@@ -16,5 +14,15 @@ public class Square implements CoordinateLookupTable{
 				return true;
 			else 
 				return false;
+		}
+		
+		public String toString() {
+			if(isEmpty()) {
+				return "-";
+			}
+			if(piece.getClass().getName().equals("Pawn"))
+				return"p";
+			
+			else return null;
 		}
 }

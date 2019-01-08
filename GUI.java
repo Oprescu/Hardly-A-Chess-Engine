@@ -23,7 +23,7 @@ public class GUI extends Application implements CoordinateLookupTable{
 	public void start(Stage primaryStage) throws Exception {
 		
 		primaryStage.setTitle("HCE 1.0");
-		
+		//hello
 		//*******************Pane Declarations*******************
 		BorderPane main_Window = new BorderPane();	
 		Pane ChessPane = new Pane();
