@@ -2,6 +2,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -37,7 +38,8 @@ public class GUI extends Application implements CoordinateLookupTable{
 		    Menu menu_View = new Menu("View");
 		top_Menu.getMenus().addAll(menu_File, menu_Edit, menu_View);
 		TextField inputBox = new TextField();
-		
+		inputBox.setText("Enter move here ex:e2,e4 ");
+		Button submitButton = new Button("Submit");
 		
 		//*******************Asset Declaration*******************
 		Image chessboard_backgroundImage = new Image("File:chessicons/board.png");
@@ -59,53 +61,21 @@ public class GUI extends Application implements CoordinateLookupTable{
 		for(int i=0;i<8;i++) {
 			chessboard_Pawns[i][0]= new ImageView(chessboard_W_Pawn);
 			chessboard_Pawns[i][1]= new ImageView(chessboard_B_Pawn);
-			chessboard_Pawns[i][0].addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-		         ImageView current = (ImageView) event.getSource();
-		         Thread task = new Thread(new Runnable(){
-		 	        @Override
-		 	        public void run() {
-
-		 	            try {
-		 	            animatePiece(current,current.getX(),current.getY()-75);
-		 	            } catch (InterruptedException e) {
-		 	                e.printStackTrace();
-		 	            }
-
-		 	            //do something.........
-
-		 	           
-
-		 	       }
-		 	    });
-		 		task.setDaemon(true);;
-		 		task.start();
-		 		
-		         //event.consume();
-		     });
-			chessboard_Pawns[i][1].addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-		        
-		         ImageView current = (ImageView) event.getSource();
-		         Thread task = new Thread(new Runnable(){
-		 	        @Override
-		 	        public void run() {
-
-		 	            try {
-		 	            animatePiece(current,current.getX(),current.getY()+75*2);
-		 	            } catch (InterruptedException e) {
-		 	                e.printStackTrace();
-		 	            }
-
-		 	            //do something.........
-
-		 	           
-
-		 	       }
-		 	    });
-		 		task.setDaemon(true);;
-		 		task.start();
-		 		
-		         //event.consume();
-		     });
+//			chessboard_Pawns[i][0].addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+//		         ImageView current = (ImageView) event.getSource();
+//		         Thread task = new Thread(new Runnable(){
+//		 	        @Override
+//		 	        public void run() {
+//		 	            try {
+//		 	            animatePiece(current,current.getX(),current.getY()-75);
+//		 	            } catch (InterruptedException e) {
+//		 	                e.printStackTrace();
+//		 	            }
+//		 	       }
+//		 	    });
+//		 		task.setDaemon(true);;
+//		 		task.start();
+//		     });
 			chessboard_Pawns[i][0].setScaleX(0.8);
 			chessboard_Pawns[i][0].setScaleY(0.8);
 			chessboard_Pawns[i][1].setScaleX(0.8);
@@ -212,33 +182,15 @@ public class GUI extends Application implements CoordinateLookupTable{
 			ChessPane.getChildren().add(chessboard_Kings[1]);
 		main_Window.setTop(top_Menu);
 		main_Window.setLeft(ChessPane);
-		//ChessPane.getChildren().add(inputBox);
-		inputBox.setTranslateY(400);
+		ChessPane.getChildren().add(inputBox);
+		ChessPane.getChildren().add(submitButton);
+		inputBox.setTranslateY(600);
+		submitButton.setTranslateY(600);
+		submitButton.setTranslateX(150);
 		//Scene scene = new Scene(main_Window, 1000,800);
-		Scene scene = new Scene(main_Window, 600,625);
+		Scene scene = new Scene(main_Window, 600,650);
 		primaryStage.setScene(scene);
 		primaryStage.show();
-		//Thread.sleep(2000);
-		Chessboard test = new Chessboard();
-		System.out.println(test);
-		Thread task = new Thread(new Runnable(){
-	        @Override
-	        public void run() {
-
-	            try {
-	            animatePiece(chessboard_Pawns[1][0],xyCoordinates_MP[1],yCoordinates_PP[3]);
-	            } catch (InterruptedException e) {
-	                e.printStackTrace();
-	            }
-
-	            //do something.........
-
-	           
-
-	       }
-	    });
-		task.setDaemon(true);
-		//task.start();
 		
 		
 	}

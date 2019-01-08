@@ -1,68 +1,50 @@
 
-
-public class Chessboard {
-	Square[][] Chessboard = new Square[8][8];
-	String gameStatus;
+public class Chessboard implements CoordinateLookupTable{
+	public static int turn = 1;
+	Square[][] board = new Square[8][8];
 	
-	public Chessboard(){
-		for(int i=0;i<8;i++)
-			for(int j=0;j<8;j++)
-				Chessboard[i][j] = new Square();
-		getSquare("A2").state="W_Pawn";
-		getSquare("B2").state="W_Pawn";
-		getSquare("C2").state="W_Pawn";
-		getSquare("D2").state="W_Pawn";
-		getSquare("E2").state="W_Pawn";
-		getSquare("F2").state="W_Pawn";
-		getSquare("G2").state="W_Pawn";
-		getSquare("H2").state="W_Pawn";
-		
-		getSquare("A7").state="B_Pawn";
-		getSquare("B7").state="B_Pawn";
-		getSquare("C7").state="B_Pawn";
-		getSquare("D7").state="B_Pawn";
-		getSquare("E7").state="B_Pawn";
-		getSquare("F7").state="B_Pawn";
-		getSquare("G7").state="B_Pawn";
-		getSquare("H7").state="B_Pawn";
-		
-		getSquare("A1").state="W_Rook";
-		getSquare("B1").state="W_Knight";
-		getSquare("C1").state="W_Bishop";
-		getSquare("D1").state="W_Queen";
-		getSquare("E1").state="W_King";
-		getSquare("F1").state="W_Bishop";
-		getSquare("G1").state="W_Knight";
-		getSquare("H1").state="W_Rook";
-		
-		getSquare("A8").state="B_Rook";
-		getSquare("B8").state="B_Knight";
-		getSquare("C8").state="B_Bishop";
-		getSquare("D8").state="B_Queen";
-		getSquare("E8").state="B_King";
-		getSquare("F8").state="B_Bishop";
-		getSquare("G8").state="B_Knight";
-		getSquare("H8").state="B_Rook";
-		
-		gameStatus="first_move";
-	}
-	
-	public Square getSquare(String squareID) {
-		for(int i=0;i<8;i++) 
-			for(int j=0;j<8;j++)
-				if(squareID.equals(Chessboard[i][j].squareID))
-				return Chessboard[i][j];
-		
-		return Chessboard[0][0];
-	}
-	
-	public String toString() {
-		String board="";
-		for(int i=0;i<8;i++) {
-			for(int j=0;j<8;j++)
-				board+=Chessboard[i][j].toString()+" ";
-			board+="\n";
+	public Chessboard() {
+		int iterator=0;
+		for(int i=0;i<8;i++){
+			for(int j=0;j<8;j++) {
+				board[i][j].name=squareNames[iterator];
+				iterator++;
+			}
 		}
-		return board;
+	}
+	
+	/**
+	 * get the square based on piece name and color
+	 * for example getsquare(Rook, true) will return 
+	 * the square that the white Rook is on
+	 * 				WILL return null if white rook is not present on board
+	 * @param pieceName
+	 * @param isWhite
+	 * @return
+	 */
+	public Square getSquare(String pieceName, boolean isWhite) {
+		for(int i=0;i<8;i++){
+			for(int j=0;j<8;j++) {
+				if(board[i][j].piece.pieceName.equals(pieceName) && (board[i][j].piece.isWhite==isWhite))
+				return board[i][j];
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * get the square based on name
+	 * for example getSquare(E4) will return the E4 square
+	 * @param name
+	 * @return square
+	 */
+	public Square getSquare(String name) {
+		for(int i=0;i<8;i++){
+			for(int j=0;j<8;j++) {
+				if(board[i][j].name.equalsIgnoreCase(name))
+				return board[i][j];
+			}
+		}
+		return null;
 	}
 }
