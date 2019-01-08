@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 public class Pawn extends Piece implements CoordinateLookupTable{
 	
+	public boolean isFirstMove=true;
 	public static int counter=1;
 	
 	public Pawn(boolean isWhite,int x, int y) {
@@ -19,9 +20,12 @@ public class Pawn extends Piece implements CoordinateLookupTable{
 		if(board[x][y+1].isEmpty()) {
 			legalMoves.add(board[x][y+1].name);
 		}
-		if(x>0)
+		if(board[x][y+2].isEmpty()&&isFirstMove) {
+			legalMoves.add(board[x][y+2].name);
+		}
+		if((x>0)&&(!board[x-1][y+1].isEmpty()))
 			legalMoves.add(board[x-1][y+1].name);
-		if(x<7)
+		if((x<7)&&(!board[x+1][y+1].isEmpty()))
 			legalMoves.add(board[x+1][y+1].name);
 		
 		return legalMoves;

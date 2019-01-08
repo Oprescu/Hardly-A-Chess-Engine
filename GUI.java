@@ -61,21 +61,21 @@ public class GUI extends Application implements CoordinateLookupTable{
 		for(int i=0;i<8;i++) {
 			chessboard_Pawns[i][0]= new ImageView(chessboard_W_Pawn);
 			chessboard_Pawns[i][1]= new ImageView(chessboard_B_Pawn);
-//			chessboard_Pawns[i][0].addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-//		         ImageView current = (ImageView) event.getSource();
-//		         Thread task = new Thread(new Runnable(){
-//		 	        @Override
-//		 	        public void run() {
-//		 	            try {
-//		 	            animatePiece(current,current.getX(),current.getY()-75);
-//		 	            } catch (InterruptedException e) {
-//		 	                e.printStackTrace();
-//		 	            }
-//		 	       }
-//		 	    });
-//		 		task.setDaemon(true);;
-//		 		task.start();
-//		     });
+			chessboard_Pawns[i][0].addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+		         ImageView current = (ImageView) event.getSource();
+		         Thread task = new Thread(new Runnable(){
+		 	        @Override
+		 	        public void run() {
+		 	            try {
+		 	            animatePiece(current,current.getX(),current.getY()-150);
+		 	            } catch (InterruptedException e) {
+		 	                e.printStackTrace();
+		 	            }
+		 	       }
+		 	    });
+		 		task.setDaemon(true);;
+		 		task.start();
+		     });
 			chessboard_Pawns[i][0].setScaleX(0.8);
 			chessboard_Pawns[i][0].setScaleY(0.8);
 			chessboard_Pawns[i][1].setScaleX(0.8);
