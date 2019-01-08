@@ -10,4 +10,11 @@ public class Square implements CoordinateLookupTable{
 			hasPiece=false;
 			name = null;
 		}
+		
+		public boolean isEmpty() {
+			if(piece==null)
+				return true;
+			else 
+				return false;
+		}
 }

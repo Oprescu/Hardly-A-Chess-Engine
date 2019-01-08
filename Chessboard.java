@@ -15,7 +15,7 @@ public class Chessboard implements CoordinateLookupTable{
 	
 	/**
 	 * get the square based on piece name and color
-	 * for example getsquare(Rook, true) will return 
+	 * for example getSquare(Rook, true) will return 
 	 * the square that the white Rook is on
 	 * 				WILL return null if white rook is not present on board
 	 * @param pieceName
