@@ -17,17 +17,31 @@ public class Pawn extends Piece implements CoordinateLookupTable{
 	@Override
 	public ArrayList<String> getLegalMoves(Square[][] board) {
 		ArrayList<String> legalMoves = new ArrayList<String>();
-		if(board[x][y+1].isEmpty()) {
-			legalMoves.add(board[x][y+1].name);
-		}
-		if(board[x][y+2].isEmpty()&&isFirstMove) {
-			legalMoves.add(board[x][y+2].name);
-		}
-		if((x>0)&&(!board[x-1][y+1].isEmpty()))
-			legalMoves.add(board[x-1][y+1].name);
-		if((x<7)&&(!board[x+1][y+1].isEmpty()))
-			legalMoves.add(board[x+1][y+1].name);
 		
+		if(isWhite) {
+			if(board[x][y+1].isEmpty()) {
+				legalMoves.add(board[x][y+1].name);
+			}
+			if(board[x][y+2].isEmpty()&&isFirstMove) {
+				legalMoves.add(board[x][y+2].name);
+			}
+			if((x>0)&&(!board[x-1][y+1].isEmpty()))
+				legalMoves.add(board[x-1][y+1].name);
+			if((x<7)&&(!board[x+1][y+1].isEmpty()))
+				legalMoves.add(board[x+1][y+1].name);
+		}
+		else {
+			if(board[x][y-1].isEmpty()) {
+				legalMoves.add(board[x][y-1].name);
+			}
+			if(board[x][y-2].isEmpty()&&isFirstMove) {
+				legalMoves.add(board[x][y-2].name);
+			}
+			if((x>0)&&(!board[x-1][y-1].isEmpty()))
+				legalMoves.add(board[x-1][y-1].name);
+			if((x<7)&&(!board[x+1][y-1].isEmpty()))
+				legalMoves.add(board[x+1][y-1].name);
+		}
 		return legalMoves;
 	}
 

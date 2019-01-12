@@ -22,41 +22,45 @@ public class Rook extends Piece implements CoordinateLookupTable{
 				legalMoves.add(board[x][y].name);
 			}
 			else {
-				legalMoves.add(board[x][y].name);
+				if(board[x][y].piece.isWhite!=isWhite)
+					legalMoves.add(board[x][y].name);
 				break;
 			}
 		}
 		//Check the x axis going left for legal moves
-				for(x=this.x-1;x>=0;x--) {
-					if(board[x][y].isEmpty()) {
-						legalMoves.add(board[x][y].name);
-					}
-					else {
-						legalMoves.add(board[x][y].name);
-						break;
-					}
+		for(x=this.x-1;x>=0;x--) {
+			if(board[x][y].isEmpty()) {
+				legalMoves.add(board[x][y].name);
 				}
+				else {
+					if(board[x][y].piece.isWhite!=isWhite)
+						legalMoves.add(board[x][y].name);
+					break;
+				}
+			}
 		//Check the Y axis going up for legal moves
 		x=this.x; //reset x
-				for(y=this.y+1;y<=7;y++) {
-					if(board[x][y].isEmpty()) {
-						legalMoves.add(board[x][y].name);
-					}
-					else {
-						legalMoves.add(board[x][y].name);
-						break;
-					}
-				}
+		for(y=this.y+1;y<=7;y++) {
+			if(board[x][y].isEmpty()) {
+				legalMoves.add(board[x][y].name);
+			}
+			else {
+				if(board[x][y].piece.isWhite!=isWhite)
+					legalMoves.add(board[x][y].name);
+				break;
+			}
+		}
 		//Check the y axis going down for legal moves
-				for(y=this.y-1;y>=0;y--) {
-					if(board[x][y].isEmpty()) {
-						legalMoves.add(board[x][y].name);
-					}
-					else {
-						legalMoves.add(board[x][y].name);
-						break;
-					}
-				}
+		for(y=this.y-1;y>=0;y--) {
+			if(board[x][y].isEmpty()) {
+				legalMoves.add(board[x][y].name);
+			}
+			else {
+				if(board[x][y].piece.isWhite!=isWhite)
+					legalMoves.add(board[x][y].name);
+				break;
+			}
+		}
 
 		return legalMoves;
 	}

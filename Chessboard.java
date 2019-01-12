@@ -6,21 +6,42 @@ public class Chessboard implements CoordinateLookupTable{
 	public static void main(String args[]) {
 		Chessboard test = new Chessboard();
 		System.out.println(test);
-		System.out.println(test.getSquare(A2).piece.getLegalMoves(test.board).toString());
+		System.out.println(test.getSquare("Knight 1", true).piece.getLegalMoves(test.board).toString());
 	}	
 	
 	public Chessboard() {
 		
+		//Declare squares objects
 		for(int i=0;i<8;i++){
 			for(int j=0;j<8;j++) {
 				board[i][j] = new Square();
 			}
 		}
 		
+		//White Pawns
 		for(int i=0;i<8;i++) {
 			board[i][1].piece=new Pawn(true,i,1);
 		}
+		Pawn.counter=1; //Reset Pawn counter
 		
+		
+		//Black Pawns
+		for(int i=0;i<8;i++) {
+			board[i][6].piece=new Pawn(false,i,6);
+		}
+		
+		//White&Black Rooks
+		board[0][0].piece=new Rook(true,0,0);
+		board[7][0].piece=new Rook(true,7,0);
+		Rook.counter=1;
+		board[0][7].piece=new Rook(false,0,7);
+		board[7][7].piece=new Rook(false,7,7);
+		
+		board[1][0].piece=new Knight(true,1,0);
+		board[6][0].piece=new Knight(true,6,0);
+		Knight.counter=1;
+		board[1][7].piece=new Knight(false,1,7);
+		board[6][7].piece=new Knight(false,6,7);
 		
 		int iterator=0;
 		for(int i=0;i<8;i++){
@@ -44,8 +65,9 @@ public class Chessboard implements CoordinateLookupTable{
 	public Square getSquare(String pieceName, boolean isWhite) {
 		for(int i=0;i<8;i++){
 			for(int j=0;j<8;j++) {
-				if(board[i][j].piece.pieceName.equals(pieceName) && (board[i][j].piece.isWhite==isWhite))
-				return board[i][j];
+				if(!board[i][j].isEmpty())
+					if(board[i][j].piece.pieceName.equals(pieceName) && (board[i][j].piece.isWhite==isWhite))
+						return board[i][j];
 			}
 		}
 		return null;
@@ -67,6 +89,9 @@ public class Chessboard implements CoordinateLookupTable{
 		return null;
 	}
 	
+	/**
+	 * Returns chessboard visually as a string
+	 */
 	public String toString() {
 	String chess="";	
 		
