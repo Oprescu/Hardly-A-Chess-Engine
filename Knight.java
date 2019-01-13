@@ -18,7 +18,7 @@ public class Knight extends Piece implements CoordinateLookupTable{
 		if((x+1<8)&&(y+2<8)&&((board[x+1][y+2].isEmpty())||(board[x+1][y+2].piece.isWhite!=isWhite))) {
 			legalMoves.add(board[x+1][y+2].name);
 		}
-		if((x-1>0)&&(y+2<8)&&((board[x-1][y+2].isEmpty())||(board[x-1][y+2].piece.isWhite!=isWhite))) {
+		if((x-1>=0)&&(y+2<8)&&((board[x-1][y+2].isEmpty())||(board[x-1][y+2].piece.isWhite!=isWhite))) {
 			legalMoves.add(board[x-1][y+2].name);
 		}
 		if((x+1<8)&&(y-2>=0)&&((board[x+1][y-2].isEmpty())||(board[x+1][y-2].piece.isWhite!=isWhite))) {
