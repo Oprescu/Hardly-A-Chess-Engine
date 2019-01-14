@@ -1,11 +1,9 @@
 import java.util.ArrayList;
-public class Rook extends Piece implements CoordinateLookupTable{
+
+public class Queen extends Piece implements CoordinateLookupTable{
 	
-	public static int counter=1;
-	
-	public Rook(boolean isWhite,int x, int y) {
-		pieceName="Rook " + counter;
-		counter++;
+	public Queen(boolean isWhite,int x, int y) {
+		pieceName="Queen";
 		this.isWhite=isWhite;
 		this.x=x;
 		this.y=y;
@@ -55,7 +53,46 @@ public class Rook extends Piece implements CoordinateLookupTable{
 				break;
 			}
 		}
-		
+		//Check the
+		//x,y axis going right and up for legal moves
+		for(int i=1;((x+i<8)&&(y+i<8));i++) {
+			if(board[x+i][y+i].isEmpty())
+				legalMoves.add(board[x+i][y+i].name);
+			else {
+				if(board[x+i][y+i].piece.isWhite!=isWhite)
+					legalMoves.add(board[x+i][y+i].name);
+				break;
+			}
+		}
+		//Check the x,y axis going left and up for legal moves
+		for(int i=1;((x-i>=0)&&(y+i<8));i++) {
+			if(board[x-i][y+i].isEmpty())
+				legalMoves.add(board[x-i][y+i].name);
+			else { 
+				if(board[x-i][y+i].piece.isWhite!=isWhite)
+					legalMoves.add(board[x-i][y+i].name);
+				break;				}
+			}
+		//Check the x,y axis going left and down for legal moves
+		for(int i=1;((x-i>=0)&&(y-i>=0));i++) {
+			if(board[x-i][y-i].isEmpty())
+				legalMoves.add(board[x-i][y-i].name);
+			else{
+				if(board[x-i][y-i].piece.isWhite!=isWhite)
+					legalMoves.add(board[x-i][y-i].name);
+				break;
+			}
+		}
+		//Check the x,y axis going right and down for legal moves
+		for(int i=1;((x+i<8)&&(y-i>=0));i++) {
+			if(board[x+i][y-i].isEmpty())
+				legalMoves.add(board[x+i][y-i].name);
+			else { 
+				if(board[x+i][y-i].piece.isWhite!=isWhite)
+					legalMoves.add(board[x+i][y-i].name);
+				break;
+			}
+		}
 		return legalMoves;
 	}
 

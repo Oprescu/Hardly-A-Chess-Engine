@@ -28,7 +28,8 @@ public class Square implements CoordinateLookupTable{
 				return"n";
 			if(piece.getClass().getName().equals("Bishop"))
 				return"b";
-			
+			if(piece.getClass().getName().equals("Queen"))
+				return"q";
 			else return null;
 		}
 }

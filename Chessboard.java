@@ -6,7 +6,7 @@ public class Chessboard implements CoordinateLookupTable{
 	public static void main(String args[]) {
 		Chessboard test = new Chessboard();
 		System.out.println(test);
-		System.out.println(test.getSquare("Rook 1", true).piece.getLegalMoves(test.board).toString());
+		System.out.println(test.getSquare("Queen", false).piece.getLegalMoves(test.board).toString());
 	}	
 	
 	public Chessboard() {
@@ -46,8 +46,11 @@ public class Chessboard implements CoordinateLookupTable{
 		board[2][0].piece=new Bishop(true,2,0);
 		board[5][0].piece=new Bishop(true,5,0);
 		Bishop.counter=1;
-		board[2][7].piece=new Bishop(true,2,7);
-		board[5][7].piece=new Bishop(true,5,7);
+		board[2][7].piece=new Bishop(false,2,7);
+		board[5][7].piece=new Bishop(false,5,7);
+		
+		board[3][0].piece=new Queen(true,3,0);
+		board[3][7].piece=new Queen(false,3,7);
 		
 		int iterator=0;
 		for(int i=0;i<8;i++){
@@ -96,7 +99,7 @@ public class Chessboard implements CoordinateLookupTable{
 	}
 	
 	/**
-	 * Returns chessboard visually as a string
+	 * Returns Chessboard visually as a string
 	 */
 	public String toString() {
 	String chess="";	
