@@ -3,11 +3,12 @@ public class Chessboard implements CoordinateLookupTable{
 	public static int turn = 1;
 	Square[][] board = new Square[8][8];
 	
-	public static void main(String args[]) {
-		Chessboard test = new Chessboard();
-		System.out.println(test);
-		System.out.println(test.getSquare("Queen", false).piece.getLegalMoves(test.board).toString());
-	}	
+//	public static void main(String args[]) {
+//		Chessboard test = new Chessboard();
+//		System.out.println(test);
+//		test.makeMove(test.getSquare(E2),test.getSquare(E3));
+//		System.out.println(test);
+//	}	
 	
 	public Chessboard() {
 		
@@ -49,8 +50,13 @@ public class Chessboard implements CoordinateLookupTable{
 		board[2][7].piece=new Bishop(false,2,7);
 		board[5][7].piece=new Bishop(false,5,7);
 		
+		//White&Black Queens
 		board[3][0].piece=new Queen(true,3,0);
 		board[3][7].piece=new Queen(false,3,7);
+		
+		//White&Black King
+		board[4][0].piece= new King(true,4,0);
+		board[4][7].piece= new King(false,4,7);
 		
 		int iterator=0;
 		for(int i=0;i<8;i++){
@@ -111,5 +117,16 @@ public class Chessboard implements CoordinateLookupTable{
 			chess+='\n';
 		}
 	return chess;
+	}
+	
+	public boolean makeMove(Square from, Square to) {
+		if(from.piece.getLegalMoves(board).contains(to.name)) {
+			System.out.println("Legal Move");
+			to.piece=from.piece;
+			from.piece=null;
+			return true;
+		}
+		else
+			return false;
 	}
 }

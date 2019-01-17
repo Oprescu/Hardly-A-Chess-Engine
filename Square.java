@@ -1,12 +1,15 @@
+import javafx.scene.image.ImageView;
 
 public class Square implements CoordinateLookupTable{
 		Piece piece;
 		String name;
 		static int counter=0;
+		ImageView GUI_Piece;
 		
 		public Square() {
 			piece = null;
 			name = null;
+			GUI_Piece=null;
 		}
 		
 		public boolean isEmpty() {
@@ -30,6 +33,8 @@ public class Square implements CoordinateLookupTable{
 				return"b";
 			if(piece.getClass().getName().equals("Queen"))
 				return"q";
+			if(piece.getClass().getName().equals("King"))
+				return"k";
 			else return null;
 		}
 }

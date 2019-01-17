@@ -21,7 +21,6 @@ public class GUI extends Application implements CoordinateLookupTable{
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		
 		primaryStage.setTitle("HCE 1.0");
 		//hello
 		//*******************Pane Declarations*******************
@@ -42,6 +41,9 @@ public class GUI extends Application implements CoordinateLookupTable{
 		Button submitButton = new Button("Submit");
 		
 		//*******************Asset Declaration*******************
+		
+		Chessboard chessboard = new Chessboard();
+		
 		Image chessboard_backgroundImage = new Image("File:chessicons/board.png");
 		ImageView chessboard_backgroundImageV = new ImageView(chessboard_backgroundImage);
 		Image chessboard_W_Pawn = new Image("File:chessicons/wpawn.png");
@@ -56,26 +58,12 @@ public class GUI extends Application implements CoordinateLookupTable{
 		Image chessboard_B_Queen = new Image("File:chessicons/bqueen.png");
 		Image chessboard_W_King = new Image("File:chessicons/wking.png");
 		Image chessboard_B_King = new Image("File:chessicons/bking.png");
+		Image selection_Square_Image = new Image("File:chessicons/SelectionSquare.png");
 		//16 pawns on board. 0 is white, 1 is black
 		ImageView[][] chessboard_Pawns = new ImageView[8][2];
 		for(int i=0;i<8;i++) {
 			chessboard_Pawns[i][0]= new ImageView(chessboard_W_Pawn);
 			chessboard_Pawns[i][1]= new ImageView(chessboard_B_Pawn);
-			chessboard_Pawns[i][0].addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-		         ImageView current = (ImageView) event.getSource();
-		         Thread task = new Thread(new Runnable(){
-		 	        @Override
-		 	        public void run() {
-		 	            try {
-		 	            animatePiece(current,current.getX(),current.getY()-150);
-		 	            } catch (InterruptedException e) {
-		 	                e.printStackTrace();
-		 	            }
-		 	       }
-		 	    });
-		 		task.setDaemon(true);;
-		 		task.start();
-		     });
 			chessboard_Pawns[i][0].setScaleX(0.8);
 			chessboard_Pawns[i][0].setScaleY(0.8);
 			chessboard_Pawns[i][1].setScaleX(0.8);
@@ -152,6 +140,62 @@ public class GUI extends Application implements CoordinateLookupTable{
 			chessboard_Kings[0].setScaleY(0.70);
 			chessboard_Kings[1].setScaleX(0.74);
 			chessboard_Kings[1].setScaleY(0.70);
+			
+		//64 Image Selection Squares, these are used to detect where a mouse pressed
+		//on the Chesssboard 
+			ImageView[] selection_Square = new ImageView[64];
+			int iterator=0;
+			
+			for(int i=0;i<8;i++) {
+				for(int j=0;j<8;j++) {
+				selection_Square[iterator] = new ImageView(selection_Square_Image);
+				selection_Square[iterator].setX(xyCoordinates_MP[i]);
+				selection_Square[iterator].setY(xyCoordinates_MP[j]);
+				selection_Square[iterator].setScaleX(0.74);
+				selection_Square[iterator].setScaleY(0.70);
+				iterator++;
+				}
+			}
+			
+		/********************Associating GUI with Chess Class pieces*******/
+		chessboard.getSquare(A2).GUI_Piece=chessboard_Pawns[0][0];	
+		chessboard.getSquare(B2).GUI_Piece=chessboard_Pawns[1][0];		
+		chessboard.getSquare(C2).GUI_Piece=chessboard_Pawns[2][0];	
+		chessboard.getSquare(D2).GUI_Piece=chessboard_Pawns[3][0];	
+		chessboard.getSquare(E2).GUI_Piece=chessboard_Pawns[4][0];	
+		chessboard.getSquare(F2).GUI_Piece=chessboard_Pawns[5][0];	
+		chessboard.getSquare(G2).GUI_Piece=chessboard_Pawns[6][0];	
+		chessboard.getSquare(H2).GUI_Piece=chessboard_Pawns[7][0];	
+		
+		chessboard.getSquare(A7).GUI_Piece=chessboard_Pawns[0][1];	
+		chessboard.getSquare(B7).GUI_Piece=chessboard_Pawns[1][1];		
+		chessboard.getSquare(C7).GUI_Piece=chessboard_Pawns[2][1];	
+		chessboard.getSquare(D7).GUI_Piece=chessboard_Pawns[3][1];	
+		chessboard.getSquare(E7).GUI_Piece=chessboard_Pawns[4][1];	
+		chessboard.getSquare(F7).GUI_Piece=chessboard_Pawns[5][1];	
+		chessboard.getSquare(G7).GUI_Piece=chessboard_Pawns[6][1];	
+		chessboard.getSquare(H7).GUI_Piece=chessboard_Pawns[7][1];	
+		
+		chessboard.getSquare(A1).GUI_Piece=chessboard_Rooks[0][0];	
+		chessboard.getSquare(H1).GUI_Piece=chessboard_Rooks[1][0];	
+		chessboard.getSquare(A8).GUI_Piece=chessboard_Rooks[0][1];	
+		chessboard.getSquare(H8).GUI_Piece=chessboard_Rooks[1][1];	
+		
+		chessboard.getSquare(B1).GUI_Piece=chessboard_Knights[0][0];	
+		chessboard.getSquare(G1).GUI_Piece=chessboard_Knights[1][0];	
+		chessboard.getSquare(B8).GUI_Piece=chessboard_Knights[0][1];	
+		chessboard.getSquare(G8).GUI_Piece=chessboard_Knights[1][1];	
+		
+		chessboard.getSquare(C1).GUI_Piece=chessboard_Bishops[0][0];	
+		chessboard.getSquare(F1).GUI_Piece=chessboard_Bishops[1][0];	
+		chessboard.getSquare(C8).GUI_Piece=chessboard_Bishops[0][1];	
+		chessboard.getSquare(F8).GUI_Piece=chessboard_Bishops[1][1];	
+		
+		chessboard.getSquare(D1).GUI_Piece=chessboard_Queens[0];	
+		chessboard.getSquare(D8).GUI_Piece=chessboard_Queens[1];	
+		chessboard.getSquare(E1).GUI_Piece=chessboard_Kings[0];
+		chessboard.getSquare(E8).GUI_Piece=chessboard_Kings[1];
+		
 		//*******************Pane settings*******************
 		ChessPane.getChildren().add(chessboard_backgroundImageV);
 		//Add pawns to pane
@@ -180,6 +224,11 @@ public class GUI extends Application implements CoordinateLookupTable{
 		//Add kings to pane
 			ChessPane.getChildren().add(chessboard_Kings[0]);
 			ChessPane.getChildren().add(chessboard_Kings[1]);
+			
+//			for(int i=0;i<64;i++)
+//				ChessPane.getChildren().add(selection_Square[i]);
+
+			
 		main_Window.setTop(top_Menu);
 		main_Window.setLeft(ChessPane);
 		ChessPane.getChildren().add(inputBox);
@@ -190,9 +239,30 @@ public class GUI extends Application implements CoordinateLookupTable{
 		//Scene scene = new Scene(main_Window, 1000,800);
 		Scene scene = new Scene(main_Window, 600,650);
 		primaryStage.setScene(scene);
-		primaryStage.show();
+		primaryStage.show();		
 		
-		
+		submitButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+	         Thread task = new Thread(new Runnable(){
+	 	        @Override
+	 	        public void run() {
+	 	            try {
+	 	            String moves[] = inputBox.getText().toUpperCase().split(",");
+	 	            if(chessboard.getSquare(moves[0]).piece.getClass().getName().equals("Pawn"))
+	 	            	animatePiece(chessboard.getSquare(moves[0]).GUI_Piece,xyCoordinates_MP[moves[1].charAt(0)-'A'],yCoordinates_PP[8-(moves[1].charAt(1)-'0')]);
+	 	            else
+	 	            	animatePiece(chessboard.getSquare(moves[0]).GUI_Piece,xyCoordinates_MP[moves[1].charAt(0)-'A'],xyCoordinates_MP[8-(moves[1].charAt(1)-'0')]);
+	 	            chessboard.makeMove(chessboard.getSquare(moves[0]), chessboard.getSquare(moves[1]));
+	 	            System.out.println(moves[1].charAt(0)-'A');
+	 	            System.out.println(moves[1].charAt(1));
+	 	            System.out.println(chessboard);
+	 	            } catch (InterruptedException e) {
+	 	                e.printStackTrace();
+	 	            }
+	 	       }
+	 	    });
+	 		task.setDaemon(true);;
+	 		task.start();
+	     });
 	}
 	
 	public void animatePiece(ImageView Piece, double x, double y) throws InterruptedException {	
@@ -208,6 +278,7 @@ public class GUI extends Application implements CoordinateLookupTable{
 				Thread.sleep(2);
 			}
 	}
+	
 	
 	
 }
