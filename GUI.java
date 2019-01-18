@@ -255,6 +255,7 @@ public class GUI extends Application implements CoordinateLookupTable{
 	 	            System.out.println(moves[1].charAt(0)-'A');
 	 	            System.out.println(moves[1].charAt(1));
 	 	            System.out.println(chessboard);
+	 	            System.out.println(chessboard.getSquare(moves[1]).piece.getLegalMoves(chessboard.board).toString());
 	 	            } catch (InterruptedException e) {
 	 	                e.printStackTrace();
 	 	            }

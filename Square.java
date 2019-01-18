@@ -5,6 +5,8 @@ public class Square implements CoordinateLookupTable{
 		String name;
 		static int counter=0;
 		ImageView GUI_Piece;
+		int x;
+		int y;
 		
 		public Square() {
 			piece = null;

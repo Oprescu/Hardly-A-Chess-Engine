@@ -16,6 +16,8 @@ public class Chessboard implements CoordinateLookupTable{
 		for(int i=0;i<8;i++){
 			for(int j=0;j<8;j++) {
 				board[i][j] = new Square();
+ 				board[i][j].x=i;
+				board[i][j].y=j;
 			}
 		}
 		
@@ -122,8 +124,19 @@ public class Chessboard implements CoordinateLookupTable{
 	public boolean makeMove(Square from, Square to) {
 		if(from.piece.getLegalMoves(board).contains(to.name)) {
 			System.out.println("Legal Move");
+			from.piece.x=to.x;
+			from.piece.y=to.y;
+			if(!to.isEmpty()) {
+				to.GUI_Piece.setOpacity(0);
+				to.GUI_Piece.setDisable(true);
+			}
+			to.GUI_Piece=from.GUI_Piece;
 			to.piece=from.piece;
+			System.out.println("Changed piece to, with piece from");
+			from.GUI_Piece=null;
 			from.piece=null;
+			System.out.println("Nulled from piece");
+			//System.out.println(this);
 			return true;
 		}
 		else
