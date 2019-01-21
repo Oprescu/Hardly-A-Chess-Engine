@@ -6,12 +6,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 
 public class GUI extends Application implements CoordinateLookupTable{
 	
@@ -36,14 +36,17 @@ public class GUI extends Application implements CoordinateLookupTable{
 		        
 		    Menu menu_View = new Menu("View");
 		top_Menu.getMenus().addAll(menu_File, menu_Edit, menu_View);
-		TextField inputBox = new TextField();
-		inputBox.setText("Enter move here ex:e2,e4 ");
+		TextArea inputBox = new TextArea();
+		inputBox.setEditable(false);
+		inputBox.setMinHeight(200);
+		inputBox.setPrefColumnCount(16);
+		inputBox.setFont(Font.font ("Monospaced", 18));
 		Button submitButton = new Button("Submit");
 		
 		//*******************Asset Declaration*******************
 		
 		Chessboard chessboard = new Chessboard();
-		
+		inputBox.setText(chessboard.toString());
 		Image chessboard_backgroundImage = new Image("File:chessicons/board.png");
 		ImageView chessboard_backgroundImageV = new ImageView(chessboard_backgroundImage);
 		Image chessboard_W_Pawn = new Image("File:chessicons/wpawn.png");
@@ -144,16 +147,20 @@ public class GUI extends Application implements CoordinateLookupTable{
 		//64 Image Selection Squares, these are used to detect where a mouse pressed
 		//on the Chesssboard 
 			ImageView[] selection_Square = new ImageView[64];
-			int iterator=0;
+			for(int i=0;i<64;i++)
+				selection_Square[i] = new ImageView(selection_Square_Image);
 			
+			int iterator=0;
 			for(int i=0;i<8;i++) {
 				for(int j=0;j<8;j++) {
-				selection_Square[iterator] = new ImageView(selection_Square_Image);
-				selection_Square[iterator].setX(xyCoordinates_MP[i]);
-				selection_Square[iterator].setY(xyCoordinates_MP[j]);
-				selection_Square[iterator].setScaleX(0.74);
-				selection_Square[iterator].setScaleY(0.70);
+				chessboard.board[i][j].selection_Square = selection_Square[iterator];
 				iterator++;
+				chessboard.board[i][j].selection_Square.setX(xyCoordinates_MP[i]);
+				chessboard.board[i][j].selection_Square.setY(xyCoordinates_MP[7-j]);
+				chessboard.board[i][j].selection_Square.setScaleX(0.74);
+				chessboard.board[i][j].selection_Square.setScaleY(0.70);
+				chessboard.board[i][j].initializeSelectionSquare();
+				chessboard.board[i][j].selection_Square.setOpacity(0);
 				}
 			}
 			
@@ -225,45 +232,55 @@ public class GUI extends Application implements CoordinateLookupTable{
 			ChessPane.getChildren().add(chessboard_Kings[0]);
 			ChessPane.getChildren().add(chessboard_Kings[1]);
 			
-//			for(int i=0;i<64;i++)
-//				ChessPane.getChildren().add(selection_Square[i]);
+			for(int i=0;i<64;i++)
+				ChessPane.getChildren().add(selection_Square[i]);
 
 			
 		main_Window.setTop(top_Menu);
 		main_Window.setLeft(ChessPane);
 		ChessPane.getChildren().add(inputBox);
 		ChessPane.getChildren().add(submitButton);
-		inputBox.setTranslateY(600);
+		inputBox.setMaxHeight(100);
+		inputBox.setTranslateX(600);
 		submitButton.setTranslateY(600);
 		submitButton.setTranslateX(150);
 		//Scene scene = new Scene(main_Window, 1000,800);
-		Scene scene = new Scene(main_Window, 600,650);
+		Scene scene = new Scene(main_Window, 800,625);
 		primaryStage.setScene(scene);
 		primaryStage.show();		
 		
-		submitButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-	         Thread task = new Thread(new Runnable(){
-	 	        @Override
-	 	        public void run() {
-	 	            try {
-	 	            String moves[] = inputBox.getText().toUpperCase().split(",");
-	 	            if(chessboard.getSquare(moves[0]).piece.getClass().getName().equals("Pawn"))
-	 	            	animatePiece(chessboard.getSquare(moves[0]).GUI_Piece,xyCoordinates_MP[moves[1].charAt(0)-'A'],yCoordinates_PP[8-(moves[1].charAt(1)-'0')]);
-	 	            else
-	 	            	animatePiece(chessboard.getSquare(moves[0]).GUI_Piece,xyCoordinates_MP[moves[1].charAt(0)-'A'],xyCoordinates_MP[8-(moves[1].charAt(1)-'0')]);
-	 	            chessboard.makeMove(chessboard.getSquare(moves[0]), chessboard.getSquare(moves[1]));
-	 	            System.out.println(moves[1].charAt(0)-'A');
-	 	            System.out.println(moves[1].charAt(1));
-	 	            System.out.println(chessboard);
-	 	            System.out.println(chessboard.getSquare(moves[1]).piece.getLegalMoves(chessboard.board).toString());
-	 	            } catch (InterruptedException e) {
-	 	                e.printStackTrace();
-	 	            }
-	 	       }
-	 	    });
-	 		task.setDaemon(true);;
-	 		task.start();
-	     });
+		Thread task = new Thread(new Runnable(){
+ 	        @Override
+ 	        public void run() {
+ 	        	while(true)
+ 	            try {
+ 	            	Thread.sleep(50);
+ 	            if(Square.is_square1_selected&&Square.is_square2_selected) {
+ 	            if(chessboard.isMovePossible(chessboard.getSquare(Square.square1_selected), chessboard.getSquare(Square.square2_selected)))
+ 	            {
+ 	            	if(chessboard.getSquare(Square.square1_selected).piece.getClass().getName().equals("Pawn"))
+ 	            		animatePiece(chessboard.getSquare(Square.square1_selected).GUI_Piece,xyCoordinates_MP[Square.square2_selected.charAt(0)-'A'],yCoordinates_PP[8-(Square.square2_selected.charAt(1)-'0')]);
+ 	            	else
+ 	            		animatePiece(chessboard.getSquare(Square.square1_selected).GUI_Piece,xyCoordinates_MP[Square.square2_selected.charAt(0)-'A'],xyCoordinates_MP[8-(Square.square2_selected.charAt(1)-'0')]);
+ 	            	
+ 	            	chessboard.makeMove(chessboard.getSquare(Square.square1_selected), chessboard.getSquare(Square.square2_selected));
+ 	            	inputBox.setText(chessboard.toString());
+ 	            }
+ 	            System.out.println(chessboard);
+ 	            if(chessboard.white_turn)
+ 	            	System.out.println("Turn : White");
+ 	            else
+ 	            	System.out.println("Turn : Black");
+ 	            Square.is_square1_selected=false;
+ 	            Square.is_square2_selected=false;
+ 	            }
+ 	            } catch (InterruptedException e) {
+ 	                e.printStackTrace();
+ 	            }
+ 	       }
+ 	    });
+ 		task.setDaemon(true);;
+ 		task.start();
 	}
 	
 	public void animatePiece(ImageView Piece, double x, double y) throws InterruptedException {	

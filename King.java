@@ -37,7 +37,7 @@ public class King extends Piece implements CoordinateLookupTable{
 			if(board[x][y-1].isEmpty())
 				legalMoves.add(board[x][y-1].name);
 			else {
-				if(board[x][y+1].piece.isWhite!=isWhite)
+				if(board[x][y-1].piece.isWhite!=isWhite)
 				legalMoves.add(board[x][y-1].name);
 			}
 		if((y-1>=0)&&(x-1>=0))

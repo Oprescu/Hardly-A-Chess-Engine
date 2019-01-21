@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 public abstract class Piece {
+	public int moveNr=0;
 	boolean isWhite;
 	String pieceName;
 	int x;

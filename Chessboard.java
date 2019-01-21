@@ -1,6 +1,7 @@
 
 public class Chessboard implements CoordinateLookupTable{
 	public static int turn = 1;
+	public static boolean white_turn = true;
 	Square[][] board = new Square[8][8];
 	
 //	public static void main(String args[]) {
@@ -121,9 +122,8 @@ public class Chessboard implements CoordinateLookupTable{
 	return chess;
 	}
 	
-	public boolean makeMove(Square from, Square to) {
-		if(from.piece.getLegalMoves(board).contains(to.name)) {
-			System.out.println("Legal Move");
+	public void makeMove(Square from, Square to) {
+			from.piece.moveNr++;
 			from.piece.x=to.x;
 			from.piece.y=to.y;
 			if(!to.isEmpty()) {
@@ -132,13 +132,14 @@ public class Chessboard implements CoordinateLookupTable{
 			}
 			to.GUI_Piece=from.GUI_Piece;
 			to.piece=from.piece;
-			System.out.println("Changed piece to, with piece from");
 			from.GUI_Piece=null;
 			from.piece=null;
-			System.out.println("Nulled from piece");
-			//System.out.println(this);
+			white_turn=!white_turn;
+	}
+	
+	public boolean isMovePossible(Square from, Square to) {
+		if(from.piece.getLegalMoves(board).contains(to.name)&&(white_turn==from.piece.isWhite))
 			return true;
-		}
 		else
 			return false;
 	}
